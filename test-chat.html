@@ -59,7 +59,8 @@
             return;
         }
 
-        const socket = new SockJS('http://localhost:8081/ws-stomp');
+        const host = window.location.hostname || '127.0.0.1';
+        const socket = new SockJS(`http://${host}:8081/ws-stomp`);
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, function (frame) {
