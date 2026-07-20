@@ -1,4 +1,4 @@
-package xyz.datt.wave.config;
+package xyz.messaging.wave.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

@@ -1,4 +1,4 @@
-package xyz.datt.wave.controller;
+package xyz.messaging.wave.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import xyz.datt.wave.domain.ChatMessage;
-import xyz.datt.wave.dto.ChatMessageDto;
-import xyz.datt.wave.repository.ChatMessageRepository;
-import xyz.datt.wave.service.RedisPublisher;
+import xyz.messaging.wave.domain.ChatMessage;
+import xyz.messaging.wave.dto.ChatMessageDto;
+import xyz.messaging.wave.repository.ChatMessageRepository;
+import xyz.messaging.wave.service.RedisPublisher;
 
 @Slf4j
 @RestController

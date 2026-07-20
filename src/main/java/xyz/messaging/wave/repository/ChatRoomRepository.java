@@ -1,8 +1,8 @@
-package xyz.datt.wave.repository;
+package xyz.messaging.wave.repository;
 
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import xyz.datt.wave.domain.ChatRoom;
+import xyz.messaging.wave.domain.ChatRoom;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, String> {
     Optional<ChatRoom> findByTargetId(String targetId);

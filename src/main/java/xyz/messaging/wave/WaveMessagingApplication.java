@@ -1,4 +1,4 @@
-package xyz.datt.wave;
+package xyz.messaging.wave;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package xyz.datt.wave.service;
+package xyz.messaging.wave.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
@@ -7,11 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import xyz.datt.wave.domain.ChatMessage;
-import xyz.datt.wave.domain.ChatRoom;
-import xyz.datt.wave.dto.ChatMessageDto;
-import xyz.datt.wave.repository.ChatMessageRepository;
-import xyz.datt.wave.repository.ChatRoomRepository;
+import xyz.messaging.wave.domain.ChatMessage;
+import xyz.messaging.wave.domain.ChatRoom;
+import xyz.messaging.wave.dto.ChatMessageDto;
+import xyz.messaging.wave.repository.ChatMessageRepository;
+import xyz.messaging.wave.repository.ChatRoomRepository;
 
 @Slf4j
 @Service

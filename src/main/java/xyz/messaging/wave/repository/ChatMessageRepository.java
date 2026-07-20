@@ -1,9 +1,9 @@
-package xyz.datt.wave.repository;
+package xyz.messaging.wave.repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import xyz.datt.wave.domain.ChatMessage;
+import xyz.messaging.wave.domain.ChatMessage;
 
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> {
     List<ChatMessage> findTop50ByRoomIdOrderByIdDesc(String roomId);

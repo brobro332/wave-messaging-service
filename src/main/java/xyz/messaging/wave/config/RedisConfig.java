@@ -1,4 +1,4 @@
-package xyz.datt.wave.config;
+package xyz.messaging.wave.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import xyz.datt.wave.service.RedisSubscriber;
+import xyz.messaging.wave.service.RedisSubscriber;
 
 @Configuration
 public class RedisConfig {

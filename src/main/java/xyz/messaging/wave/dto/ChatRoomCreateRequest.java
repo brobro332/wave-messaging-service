@@ -1,4 +1,4 @@
-package xyz.datt.wave.dto;
+package xyz.messaging.wave.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

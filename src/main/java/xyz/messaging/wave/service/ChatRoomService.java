@@ -1,4 +1,4 @@
-package xyz.datt.wave.service;
+package xyz.messaging.wave.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,13 +8,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import xyz.datt.wave.domain.ChatRoom;
-import xyz.datt.wave.domain.ChatRoomMember;
-import xyz.datt.wave.dto.ChatRoomCreateRequest;
-import xyz.datt.wave.dto.ChatRoomResponse;
-import xyz.datt.wave.repository.ChatMessageRepository;
-import xyz.datt.wave.repository.ChatRoomMemberRepository;
-import xyz.datt.wave.repository.ChatRoomRepository;
+import xyz.messaging.wave.domain.ChatRoom;
+import xyz.messaging.wave.domain.ChatRoomMember;
+import xyz.messaging.wave.dto.ChatRoomCreateRequest;
+import xyz.messaging.wave.dto.ChatRoomResponse;
+import xyz.messaging.wave.repository.ChatMessageRepository;
+import xyz.messaging.wave.repository.ChatRoomMemberRepository;
+import xyz.messaging.wave.repository.ChatRoomRepository;
 
 @Slf4j
 @Service

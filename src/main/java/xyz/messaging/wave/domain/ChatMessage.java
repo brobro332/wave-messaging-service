@@ -1,4 +1,4 @@
-package xyz.datt.wave.domain;
+package xyz.messaging.wave.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,16 +11,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Table(name = "wave_chat_room_members")
+@Table(name = "wave_chat_messages")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ChatRoomMember {
+public class ChatMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +28,14 @@ public class ChatRoomMember {
     private String roomId;
 
     @Column(nullable = false)
-    private String userId;        // 유저 닉네임 또는 유저 ID
+    private String sender;
 
-    private LocalDateTime lastReadAt; // 마지막으로 읽은 시각 (Unread count 계산용)
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String message;
 
     @Column(nullable = false)
-    private LocalDateTime joinedAt;
+    private String messageType;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
 }

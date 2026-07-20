@@ -1,4 +1,4 @@
-package xyz.datt.wave.domain;
+package xyz.messaging.wave.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
