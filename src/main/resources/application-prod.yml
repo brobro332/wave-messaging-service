@@ -26,6 +26,10 @@ spring:
       port: 6379
       database: 1
 
+  # Elasticsearch Settings (datt-es 컨테이너 사용)
+  elasticsearch:
+    uris: ${SPRING_ELASTICSEARCH_URIS:http://elasticsearch:9200}
+
   # Kafka Settings (wave-kafka 컨테이너 사용)
   kafka:
     bootstrap-servers: wave-kafka:9092

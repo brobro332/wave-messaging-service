@@ -40,6 +40,17 @@ public class ChatRoomController {
     }
 
     /**
+     * 특정 워크스페이스 내부의 채팅방 목록 및 안 읽은 메시지 수 조회 API
+     */
+    @GetMapping("/api/workspaces/{workspaceId}/rooms")
+    public ResponseEntity<List<ChatRoomResponse>> getRoomsByWorkspace(
+            @PathVariable Long workspaceId,
+            @RequestParam String userId) {
+        List<ChatRoomResponse> responses = chatRoomService.getRoomsByWorkspace(workspaceId, userId);
+        return ResponseEntity.ok(responses);
+    }
+
+    /**
      * 유저별 참여 톡방 목록 및 안 읽은 메시지 수(Unread Count) 조회 API
      */
     @GetMapping("/api/chat/rooms")

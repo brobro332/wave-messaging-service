@@ -17,4 +17,5 @@ public class ChatRoomCreateRequest {
     private String roomType;     // 방 타입 (LOCAL, ANCHOR, DIRECT)
     private String targetId;     // 메인 target ID (닻 ID 또는 지하철역 이름)
     private String userId;       // 개설자 유저 ID / 닉네임
+    private Long workspaceId;    // 소속 워크스페이스 ID (옵션)
 }

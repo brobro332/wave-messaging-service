@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.kafka.core.KafkaTemplate;
 import xyz.messaging.wave.domain.ChatMessage;
 import xyz.messaging.wave.domain.ChatRoom;
 import xyz.messaging.wave.dto.ChatMessageDto;
@@ -22,6 +23,7 @@ public class RedisSubscriber {
     private final SimpMessageSendingOperations messagingTemplate;
     private final ChatMessageRepository chatMessageRepository;
     private final ChatRoomRepository chatRoomRepository;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     @Transactional
     public void sendMessage(String publishMessage) {
@@ -41,6 +43,13 @@ public class RedisSubscriber {
                     .createdAt(LocalDateTime.now())
                     .build();
             chatMessageRepository.save(entity);
+
+            // Kafka 토픽 chat-messages 로 비동기 발행
+            try {
+                kafkaTemplate.send("chat-messages", entity.getRoomId(), entity);
+            } catch (Exception ke) {
+                log.error("Failed to send chat message to Kafka", ke);
+            }
 
             // ChatRoom의 lastMessage 및 lastMessageAt 자동 갱신
             ChatRoom room = chatRoomRepository.findById(chatMessage.getRoomId())

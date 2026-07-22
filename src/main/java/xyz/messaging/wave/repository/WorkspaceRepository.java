@@ -1,0 +1,9 @@
+package xyz.messaging.wave.repository;
+
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import xyz.messaging.wave.domain.Workspace;
+
+public interface WorkspaceRepository extends JpaRepository<Workspace, Long> {
+    Optional<Workspace> findByInviteCode(String inviteCode);
+}

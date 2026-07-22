@@ -40,6 +40,7 @@ public class ChatRoomService {
                 .roomName(request.getRoomName() != null ? request.getRoomName() : "신규 톡방")
                 .roomType(request.getRoomType() != null ? request.getRoomType() : "LOCAL")
                 .targetId(request.getTargetId())
+                .workspaceId(request.getWorkspaceId())
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -67,6 +68,31 @@ public class ChatRoomService {
                                 .joinedAt(LocalDateTime.now())
                                 .build()
                 ));
+    }
+
+    /**
+     * 특정 워크스페이스 내 개설된 톡방 목록 및 안 읽은 메시지 수 조회
+     */
+    @Transactional(readOnly = true)
+    public List<ChatRoomResponse> getRoomsByWorkspace(Long workspaceId, String userId) {
+        List<ChatRoom> rooms = chatRoomRepository.findAllByWorkspaceId(workspaceId);
+        List<ChatRoomResponse> responses = new ArrayList<>();
+
+        for (ChatRoom room : rooms) {
+            long unreadCount = 0;
+            java.util.Optional<ChatRoomMember> memberOpt = chatRoomMemberRepository.findByRoomIdAndUserId(room.getRoomId(), userId);
+            if (memberOpt.isPresent()) {
+                ChatRoomMember member = memberOpt.get();
+                if (member.getLastReadAt() != null) {
+                    unreadCount = chatMessageRepository.countByRoomIdAndCreatedAtAfter(room.getRoomId(), member.getLastReadAt());
+                } else {
+                    unreadCount = chatMessageRepository.countByRoomId(room.getRoomId());
+                }
+            }
+            responses.add(convertToResponse(room, unreadCount));
+        }
+
+        return responses;
     }
 
     /**

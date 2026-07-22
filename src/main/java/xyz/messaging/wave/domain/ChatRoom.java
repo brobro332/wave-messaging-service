@@ -32,6 +32,9 @@ public class ChatRoom {
 
     private String targetId;        // 연동 메인 ID (닻 ID, 장소 ID 등)
 
+    private Long workspaceId;       // 소속 워크스페이스 ID
+
+
     @Column(columnDefinition = "TEXT")
     private String lastMessage;     // 마지막 대화 내용
 
