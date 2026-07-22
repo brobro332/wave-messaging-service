@@ -1,0 +1,39 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  # PostgreSQL Settings (datt-db 컨테이너의 datt_wave 데이터베이스 사용)
+  datasource:
+    url: jdbc:postgresql://datt-db:5432/datt_wave?createDatabaseIfNotExist=true
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # Redis Settings (wave-redis 컨테이너 사용)
+  data:
+    redis:
+      host: wave-redis
+      port: 6379
+      database: 1
+
+  # Kafka Settings (wave-kafka 컨테이너 사용)
+  kafka:
+    bootstrap-servers: wave-kafka:9092
+    consumer:
+      group-id: wave-messaging-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer

@@ -1,0 +1,68 @@
+name: Deploy Wave Messaging Service
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Build and Deploy Wave Messaging Service
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'gradle'
+
+    - name: Grant Execute Permission for Gradlew
+      run: chmod +x gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew build -x test
+
+    - name: Create Destination Directories on OCI VM
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VM_HOST }}
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          mkdir -p /home/ubuntu/wave-messaging-service/build/libs
+
+    - name: Transfer JAR File via SSH SCP
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.VM_HOST }}
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        source: "build/libs/wave-messaging-service-0.0.1-SNAPSHOT.jar"
+        target: "/home/ubuntu/wave-messaging-service"
+
+    - name: Restart wave-messaging-service Container
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VM_HOST }}
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          cd /home/ubuntu/datt-platform
+          
+          # Ensure services are up and restart messaging container
+          if command -v docker-compose &> /dev/null; then
+            docker-compose up -d wave-redis wave-kafka wave-messaging-service
+            docker-compose restart wave-messaging-service
+          else
+            docker compose up -d wave-redis wave-kafka wave-messaging-service
+            docker compose restart wave-messaging-service
+          fi
