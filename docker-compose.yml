@@ -9,13 +9,13 @@ services:
     environment:
       - POSTGRES_USER=datt_user
       - POSTGRES_PASS=datt_password
-      - POSTGRES_DB=datt_wave
+      - POSTGRES_DB=datt
     ports:
       - "5433:5432"
     volumes:
       - wave-db-data:/var/lib/postgresql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d datt_wave -U datt_user"]
+      test: ["CMD-SHELL", "pg_isready -d datt -U datt_user"]
       interval: 5s
       timeout: 5s
       retries: 5

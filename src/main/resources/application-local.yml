@@ -3,9 +3,9 @@ spring:
     activate:
       on-profile: local
 
-  # PostgreSQL Settings (datt_wave DB 사용)
+  # PostgreSQL Settings (datt DB 사용)
   datasource:
-    url: jdbc:postgresql://localhost:5433/datt_wave?createDatabaseIfNotExist=true
+    url: jdbc:postgresql://localhost:5433/datt?createDatabaseIfNotExist=true
     username: datt_user
     password: datt_password
     driver-class-name: org.postgresql.Driver
