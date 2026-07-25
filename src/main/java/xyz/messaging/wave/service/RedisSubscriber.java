@@ -16,7 +16,6 @@ import xyz.messaging.wave.repository.ChatRoomRepository;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class RedisSubscriber {
 
     private final ObjectMapper objectMapper;
@@ -24,6 +23,17 @@ public class RedisSubscriber {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final KafkaTemplate<String, Object> kafkaTemplate;
+
+    public RedisSubscriber(SimpMessageSendingOperations messagingTemplate,
+                           ChatMessageRepository chatMessageRepository,
+                           ChatRoomRepository chatRoomRepository,
+                           KafkaTemplate<String, Object> kafkaTemplate) {
+        this.messagingTemplate = messagingTemplate;
+        this.chatMessageRepository = chatMessageRepository;
+        this.chatRoomRepository = chatRoomRepository;
+        this.kafkaTemplate = kafkaTemplate;
+        this.objectMapper = new ObjectMapper().findAndRegisterModules();
+    }
 
     @Transactional
     public void sendMessage(String publishMessage) {
