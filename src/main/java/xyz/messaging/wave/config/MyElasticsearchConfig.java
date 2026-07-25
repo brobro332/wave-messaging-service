@@ -15,7 +15,8 @@ public class MyElasticsearchConfig extends ElasticsearchConfiguration {
                 .connectedTo("elasticsearch:9200")
                 .withHeaders(() -> {
                     org.springframework.data.elasticsearch.support.HttpHeaders headers = new org.springframework.data.elasticsearch.support.HttpHeaders();
-                    headers.add("Accept", "application/json");
+                    headers.clear();
+                    headers.set("Accept", "application/json");
                     return headers;
                 })
                 .withConnectTimeout(Duration.ofSeconds(5))
