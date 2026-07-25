@@ -3,7 +3,9 @@ package xyz.messaging.wave;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {
+        org.springframework.boot.elasticsearch.autoconfigure.ElasticsearchClientAutoConfiguration.class
+})
 public class WaveMessagingApplication {
 
     public static void main(String[] args) {
