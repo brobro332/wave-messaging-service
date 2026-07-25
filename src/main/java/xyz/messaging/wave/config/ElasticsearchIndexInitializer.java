@@ -1,35 +1,37 @@
 package xyz.messaging.wave.config;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
+import co.elastic.clients.elasticsearch.indices.DeleteIndexRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
-import org.springframework.data.elasticsearch.core.IndexOperations;
 import org.springframework.stereotype.Component;
-import xyz.messaging.wave.domain.ChatMessageDocument;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class ElasticsearchIndexInitializer {
 
-    private final ElasticsearchOperations elasticsearchOperations;
+    private final ElasticsearchClient elasticsearchClient;
 
     @EventListener(ApplicationReadyEvent.class)
     public void initializeIndices() {
         try {
-            IndexOperations indexOps = elasticsearchOperations.indexOps(ChatMessageDocument.class);
+            log.info("Deleting existing 'chat_messages' index for applying new mapping...");
             try {
-                log.info("Attempting to create Elasticsearch 'chat_messages' index with Nori mapping...");
-                indexOps.create();
-                indexOps.putMapping(indexOps.createMapping(ChatMessageDocument.class));
-                log.info("Successfully initialized Elasticsearch 'chat_messages' index and mapping.");
-            } catch (Exception existEx) {
-                log.info("Elasticsearch 'chat_messages' index already exists or creation skipped. Reason: {}", existEx.getMessage());
+                elasticsearchClient.indices().delete(DeleteIndexRequest.of(d -> d.index("chat_messages")));
+            } catch (Exception ignore) {
+                // Ignore if it doesn't exist
             }
+
+            log.info("Creating Elasticsearch 'chat_messages' index...");
+            elasticsearchClient.indices().create(CreateIndexRequest.of(c -> c.index("chat_messages")));
+            log.info("Successfully created new 'chat_messages' index.");
+
         } catch (Exception e) {
-            log.error("Failed to initialize Elasticsearch 'chat_messages' index mapping", e);
+            log.error("Failed to initialize Elasticsearch 'chat_messages' index", e);
         }
     }
 }

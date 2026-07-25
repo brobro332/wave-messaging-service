@@ -73,7 +73,7 @@ public class ChatController {
         log.info("Searching chat messages in room [{}] for keyword: {}", roomId, keyword);
         
         Criteria criteria = new Criteria("roomId").is(roomId)
-                .and(new Criteria("message").contains(keyword));
+                .and(new Criteria("message").is(keyword).or(new Criteria("message.ngram").is(keyword)));
 
         CriteriaQuery query = new CriteriaQuery(criteria);
         SearchHits<ChatMessageDocument> searchHits = elasticsearchOperations.search(query, ChatMessageDocument.class);
