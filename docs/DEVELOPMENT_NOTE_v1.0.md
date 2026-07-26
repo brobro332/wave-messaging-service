@@ -20,3 +20,9 @@
   - RequestLoggingFilter 신규 추가
   - HTTP 요청 헤더에서 X-Trace-Id를 추출하여 로깅 컨텍스트(MDC)에 등록
   - 헤더에 없으면 신규 생성, 요청 클라이언트 IP 수집 등 datt-platform과 동일한 규격의 로깅 구현
+
+### af701b2 Kafka SerializationException 버그 수정
+- **작업 파일**: src/main/java/xyz/messaging/wave/service/RedisSubscriber.java
+- **작업 목적**: ChatMessage 객체를 Kafka로 전송할 때 발생하는 직렬화 예외 해결
+- **작업 내용**:
+  - KafkaTemplate이 StringSerializer를 사용하도록 설정되어 있으므로, 전송 전에 ObjectMapper를 사용하여 ChatMessage 객체를 JSON 문자열(String)로 변환(Serialize)하여 전송하도록 수정

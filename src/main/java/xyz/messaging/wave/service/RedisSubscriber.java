@@ -56,7 +56,8 @@ public class RedisSubscriber {
 
             // Kafka 토픽 chat-messages 로 비동기 발행
             try {
-                kafkaTemplate.send("chat-messages", entity.getRoomId(), entity);
+                String entityJson = objectMapper.writeValueAsString(entity);
+                kafkaTemplate.send("chat-messages", entity.getRoomId(), entityJson);
             } catch (Exception ke) {
                 log.error("Failed to send chat message to Kafka", ke);
             }
