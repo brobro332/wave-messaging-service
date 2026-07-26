@@ -26,3 +26,9 @@
 - **작업 목적**: ChatMessage 객체를 Kafka로 전송할 때 발생하는 직렬화 예외 해결
 - **작업 내용**:
   - KafkaTemplate이 StringSerializer를 사용하도록 설정되어 있으므로, 전송 전에 ObjectMapper를 사용하여 ChatMessage 객체를 JSON 문자열(String)로 변환(Serialize)하여 전송하도록 수정
+
+### 3301967 Elasticsearch Jackson SerializationException 버그 수정
+- **작업 파일**: src/main/java/xyz/messaging/wave/config/MyElasticsearchConfig.java
+- **작업 목적**: ElasticsearchClient 객체가 LocalDateTime 타입(Java 8 Date/Time API)을 정상적으로 직렬화하도록 수정
+- **작업 내용**:
+  - JacksonJsonpMapper 생성 시 기본 ObjectMapper 대신 JavaTimeModule이 등록된 ObjectMapper를 주입하여 LocalDateTime 변환 시 발생하는 InvalidDefinitionException 예외 해결

@@ -8,6 +8,7 @@ import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 public class MyElasticsearchConfig {
@@ -18,8 +19,9 @@ public class MyElasticsearchConfig {
             new HttpHost("elasticsearch", 9200, "http")
         ).build();
 
+        ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
         ElasticsearchTransport transport = new RestClientTransport(
-            restClient, new JacksonJsonpMapper());
+            restClient, new JacksonJsonpMapper(mapper));
 
         return new ElasticsearchClient(transport);
     }
