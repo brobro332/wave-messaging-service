@@ -32,3 +32,10 @@
 - **작업 목적**: ElasticsearchClient 객체가 LocalDateTime 타입(Java 8 Date/Time API)을 정상적으로 직렬화하도록 수정
 - **작업 내용**:
   - JacksonJsonpMapper 생성 시 기본 ObjectMapper 대신 JavaTimeModule이 등록된 ObjectMapper를 주입하여 LocalDateTime 변환 시 발생하는 InvalidDefinitionException 예외 해결
+
+### 307a49c 모니터링 메트릭 추가
+- **작업 파일**: build.gradle, src/main/resources/application.yml
+- **작업 목적**: Prometheus 메트릭 수집 허용
+- **작업 내용**:
+  - spring-boot-starter-actuator, micrometer-registry-prometheus 의존성 추가
+  - pplication.yml에 Actuator 엔드포인트 개방 설정 추가
