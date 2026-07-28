@@ -69,7 +69,7 @@ public class ChatRoomController {
      * @param userId 현재 조회 요청을 보낸 유저의 식별 ID
      * @return 상태 코드 200(OK)과 함께 워크스페이스 소속 채팅방 목록 및 각각의 안 읽은 카운트 반환
      */
-    @GetMapping("/api/workspaces/{workspaceId}/rooms")
+    @GetMapping("/api/chat/workspaces/{workspaceId}/rooms")
     public ResponseEntity<List<ChatRoomResponse>> getRoomsByWorkspace(
             @PathVariable Long workspaceId,
             @RequestParam String userId) {
